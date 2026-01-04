@@ -1,0 +1,80 @@
+# Project sessions for testing
+
+# Main sessions
+main_session:
+  project: claude_explorer
+  session_id: main-abc123-def456
+  git_branch: main
+  cwd: /Users/test/Code/claude-explorer
+  claude_version: "1.0.0"
+  is_sidechain: false
+  started_at: <%= 2.hours.ago %>
+  ended_at: <%= 1.hour.ago %>
+  total_input_tokens: 10000
+  total_output_tokens: 5000
+  total_cache_read_tokens: 1000
+  total_cache_creation_tokens: 500
+  messages_count: 5
+  summary: "Built the data import feature"
+
+recent_session:
+  project: claude_explorer
+  session_id: recent-jkl012-mno345
+  git_branch: feature/tests
+  cwd: /Users/test/Code/claude-explorer
+  claude_version: "1.0.1"
+  is_sidechain: false
+  started_at: <%= 30.minutes.ago %>
+  ended_at: ~
+  total_input_tokens: 2000
+  total_output_tokens: 1000
+  total_cache_read_tokens: 0
+  total_cache_creation_tokens: 0
+  messages_count: 2
+  summary: ~
+
+writebook_session:
+  project: writebook
+  session_id: writebook-xyz789
+  is_sidechain: false
+  started_at: <%= 1.day.ago %>
+  ended_at: <%= 23.hours.ago %>
+  total_input_tokens: 500
+  total_output_tokens: 250
+  total_cache_read_tokens: 0
+  total_cache_creation_tokens: 0
+  messages_count: 1
+  summary: ~
+
+# Sidechain sessions (agents)
+agent_sidechain:
+  project: claude_explorer
+  session_id: agent-xyz789
+  agent_id: xyz789
+  parent_project_session: main_session
+  git_branch: main
+  cwd: /Users/test/Code/claude-explorer
+  is_sidechain: true
+  started_at: <%= 1.5.hours.ago %>
+  ended_at: <%= 1.25.hours.ago %>
+  total_input_tokens: 500
+  total_output_tokens: 250
+  total_cache_read_tokens: 0
+  total_cache_creation_tokens: 0
+  messages_count: 2
+  summary: "Explored codebase"
+
+orphan_agent:
+  project: claude_explorer
+  session_id: agent-orphan123
+  agent_id: orphan123
+  parent_project_session: ~
+  is_sidechain: true
+  started_at: <%= 3.hours.ago %>
+  ended_at: <%= 2.5.hours.ago %>
+  total_input_tokens: 100
+  total_output_tokens: 50
+  total_cache_read_tokens: 0
+  total_cache_creation_tokens: 0
+  messages_count: 1
+  summary: ~

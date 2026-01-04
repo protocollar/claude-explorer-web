@@ -1,0 +1,21 @@
+@layer components {
+  .pagination-link {
+    display: block;
+    text-align: center;
+    margin-top: var(--spacing-lg);
+    padding: var(--spacing-md);
+    color: var(--color-muted);
+    background: none;
+    border: none;
+    grid-column: 1 / -1;
+
+    &:hover {
+      color: var(--color-link);
+    }
+
+    &[aria-busy="true"] {
+      opacity: 0.5;
+      pointer-events: none;
+    }
+  }
+}

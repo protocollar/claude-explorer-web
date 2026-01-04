@@ -1,0 +1,57 @@
+@layer components {
+  .message-tree {
+    font-size: 0.875rem;
+  }
+
+  .tree-node {
+    margin-left: var(--spacing-lg);
+    border-left: 2px solid var(--color-border);
+    padding-left: var(--spacing-md);
+    margin-bottom: var(--spacing-xs);
+
+    &:first-child {
+      margin-left: 0;
+      border-left: none;
+      padding-left: 0;
+    }
+  }
+
+  .tree-node__content {
+    display: flex;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-sm);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    align-items: flex-start;
+  }
+
+  .tree-node--user .tree-node__content {
+    background: var(--color-user);
+  }
+
+  .tree-node--assistant .tree-node__content {
+    background: var(--color-assistant);
+  }
+
+  .tree-node__role {
+    font-weight: bold;
+    width: 1.5em;
+    text-align: center;
+  }
+
+  .tree-node__text {
+    flex: 1;
+    overflow: hidden;
+  }
+
+  .tree-node__tools {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--color-muted);
+  }
+
+  .tree-node__children {
+    margin-top: var(--spacing-xs);
+  }
+}

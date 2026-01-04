@@ -1,0 +1,20 @@
+<% content_for(:title) { "Message - Claude Explorer" } %>
+
+<header class="page-header">
+  <div class="page-header__breadcrumb">
+    <%= link_to @project_session.project.name, @project_session.project %> /
+    <%= link_to @project_session.display_name, @project_session %> /
+  </div>
+  <h1>Message Detail</h1>
+</header>
+
+<%= render "message", message: @message %>
+
+<% if @message.child_messages.any? %>
+  <section class="replies">
+    <h2>Replies (<%= @message.child_messages.count %>)</h2>
+    <% @message.child_messages.each do |reply| %>
+      <%= render "message", message: reply %>
+    <% end %>
+  </section>
+<% end %>

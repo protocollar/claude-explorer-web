@@ -1,0 +1,24 @@
+<div class="tool-use" data-controller="collapsible">
+  <button class="tool-use__header" data-action="click->collapsible#toggle" type="button">
+    <span class="tool-use__name"><%= tool_use.tool_name %></span>
+    <span class="tool-use__preview"><%= tool_use.display_input %></span>
+    <% if tool_use.success == false %>
+      <span class="tool-use__status tool-use__status--error">Error</span>
+    <% elsif tool_use.success == true %>
+      <span class="tool-use__status tool-use__status--success">OK</span>
+    <% end %>
+  </button>
+
+  <div class="tool-use__details" data-collapsible-target="content" hidden>
+    <div class="tool-use__section">
+      <strong>Input:</strong>
+      <pre class="tool-use__input"><%= JSON.pretty_generate(tool_use.input) %></pre>
+    </div>
+    <% if tool_use.result.present? %>
+      <div class="tool-use__section">
+        <strong>Result:</strong>
+        <pre class="tool-use__result"><%= truncate(tool_use.result.to_s, length: 1000) %></pre>
+      </div>
+    <% end %>
+  </div>
+</div>

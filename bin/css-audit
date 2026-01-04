@@ -1,0 +1,162 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+# CSS Audit - Find unused CSS classes
+#
+# Usage:
+#   bin/css-audit           # Show unused classes
+#   bin/css-audit --verbose # Show where each class is used
+#   bin/css-audit --json    # Output as JSON
+
+require "set"
+require "json"
+
+SEARCH_PATHS = [
+  "app/views/**/*.erb",
+  "app/helpers/**/*.rb",
+  "app/javascript/**/*.js",
+  "app/controllers/**/*.rb"  # For inline class references
+].freeze
+
+CSS_PATH = "app/assets/stylesheets/**/*.css"
+
+def extract_css_classes(css_content)
+  classes = Set.new
+
+  # Match class selectors: .class-name, .class__element, .class--modifier
+  css_content.scan(/\.([a-zA-Z_-][a-zA-Z0-9_-]*)/).flatten.each do |cls|
+    classes << cls
+  end
+
+  classes
+end
+
+def find_class_usage(class_name, search_files, dynamic_bases)
+  usages = []
+
+  search_files.each do |file|
+    content = File.read(file)
+
+    # Check various patterns where classes appear:
+    # - class="..." or class: "..."
+    # - dom_class, dom_id helpers
+    # - classList operations in JS
+    # - string interpolation with class names
+
+    patterns = [
+      /\bclass[=:]\s*["'][^"']*\b#{Regexp.escape(class_name)}\b/,
+      /["'][^"']*\b#{Regexp.escape(class_name)}\b[^"']*["']/,
+      /classList\.[a-z]+\(["']#{Regexp.escape(class_name)}["']\)/,
+      /\b#{Regexp.escape(class_name)}\b/  # Fallback: any reference
+    ]
+
+    patterns.each do |pattern|
+      if content.match?(pattern)
+        usages << file
+        break
+      end
+    end
+  end
+
+  # Check if this is a dynamic modifier (e.g., message--user from message--<%= role %>)
+  if usages.empty? && class_name.include?("--")
+    base = class_name.split("--").first
+    if dynamic_bases.include?(base)
+      usages << "(dynamic: #{base}--<%= ... %>)"
+    end
+  end
+
+  usages.uniq
+end
+
+def find_dynamic_class_bases(search_files)
+  # Find patterns like: class="foo foo--<%= x %>" which generate dynamic modifiers
+  bases = Set.new
+
+  search_files.each do |file|
+    content = File.read(file)
+
+    # Match: class="base base--<%= ... %>" or similar patterns
+    # Capture hyphenated class names before the -- modifier separator
+    content.scan(/class=["'][^"']*?([a-z][a-z0-9]*(?:-[a-z0-9]+)*)--<%=/i).flatten.each do |base|
+      bases << base
+    end
+  end
+
+  bases
+end
+
+def main
+  verbose = ARGV.include?("--verbose")
+  json_output = ARGV.include?("--json")
+
+  # Gather CSS files
+  css_files = Dir.glob(CSS_PATH)
+  all_classes = Set.new
+
+  css_files.each do |file|
+    content = File.read(file)
+    all_classes.merge(extract_css_classes(content))
+  end
+
+  # Gather search files
+  search_files = SEARCH_PATHS.flat_map { |pattern| Dir.glob(pattern) }
+
+  # Find dynamic class bases (e.g., message from message--<%= role %>)
+  dynamic_bases = find_dynamic_class_bases(search_files)
+
+  # Check each class
+  results = { used: [], unused: [], usage_map: {} }
+
+  all_classes.sort.each do |cls|
+    usages = find_class_usage(cls, search_files, dynamic_bases)
+
+    if usages.empty?
+      results[:unused] << cls
+    else
+      results[:used] << cls
+      results[:usage_map][cls] = usages if verbose
+    end
+  end
+
+  if json_output
+    output = {
+      total_classes: all_classes.size,
+      used_count: results[:used].size,
+      unused_count: results[:unused].size,
+      unused: results[:unused]
+    }
+    output[:usage_map] = results[:usage_map] if verbose
+    puts JSON.pretty_generate(output)
+  else
+    puts "CSS Audit Report"
+    puts "=" * 50
+    puts "Total classes: #{all_classes.size}"
+    puts "Used: #{results[:used].size}"
+    puts "Potentially unused: #{results[:unused].size}"
+    puts
+
+    if results[:unused].any?
+      puts "Potentially Unused Classes:"
+      puts "-" * 30
+      results[:unused].each { |cls| puts "  .#{cls}" }
+      puts
+      puts "Note: Some classes may be dynamically generated or used"
+      puts "in ways not detected by static analysis. Verify before removing."
+    else
+      puts "No unused classes detected!"
+    end
+
+    if verbose && results[:usage_map].any?
+      puts
+      puts "Class Usage Details:"
+      puts "-" * 30
+      results[:usage_map].each do |cls, files|
+        puts "  .#{cls}:"
+        files.each { |f| puts "    - #{f}" }
+      end
+    end
+  end
+end
+
+main

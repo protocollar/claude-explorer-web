@@ -1,0 +1,19 @@
+<% content_for(:title) { "Tree View - #{@project_session.display_name} - Claude Explorer" } %>
+
+<header class="page-header">
+  <div class="page-header__breadcrumb">
+    <%= link_to "Projects", projects_path %> /
+    <%= link_to @project_session.project.name, @project_session.project %> /
+    <%= link_to @project_session.display_name, @project_session %> /
+  </div>
+  <h1>Message Tree</h1>
+  <p class="page-header__subtitle">Visualizing conversation branching</p>
+
+  <div class="session-actions">
+    <%= link_to "Timeline View", project_session_path(@project_session), class: "btn btn--small" %>
+  </div>
+</header>
+
+<div class="message-tree" data-controller="tree">
+  <%= render "messages/tree_node", messages: @root_messages %>
+</div>

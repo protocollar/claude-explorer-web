@@ -1,0 +1,20 @@
+<% case block["type"] %>
+<% when "text" %>
+  <div class="content-block content-block--text">
+    <%= simple_format(block["text"]) %>
+  </div>
+<% when "thinking" %>
+  <details class="content-block content-block--thinking">
+    <summary>Thinking (<%= block["thinking"]&.length || 0 %> chars)</summary>
+    <div class="content-block__thinking-content">
+      <%= simple_format(block["thinking"]) %>
+    </div>
+  </details>
+<% when "tool_use" %>
+  <%# Handled separately in message footer %>
+<% when "tool_result" %>
+  <div class="content-block content-block--tool-result">
+    <strong>Result for <%= block["tool_use_id"]&.first(12) %>...</strong>
+    <pre><%= truncate(block["content"].to_s, length: 500) %></pre>
+  </div>
+<% end %>

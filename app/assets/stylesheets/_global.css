@@ -1,0 +1,44 @@
+/*
+ * Global CSS Configuration
+ * Two-tier variable system: named values -> semantic abstractions
+ */
+
+@layer reset, base, components, utilities;
+
+:root {
+  /* Tier 1: Named values */
+  --hex-white: #ffffff;
+  --hex-near-black: #1a1a1a;
+  --hex-gray-600: #666666;
+  --hex-gray-200: #e5e5e5;
+  --hex-blue-600: #0066cc;
+  --hex-blue-100: #f0f7ff;
+  --hex-gray-100: #f5f5f5;
+  --hex-yellow-100: #fff9db;
+  --hex-green-100: #f0fff4;
+  --hex-green-500: #22c55e;
+  --hex-red-500: #ef4444;
+
+  /* Tier 2: Semantic abstractions */
+  --color-bg: var(--hex-white);
+  --color-text: var(--hex-near-black);
+  --color-muted: var(--hex-gray-600);
+  --color-border: var(--hex-gray-200);
+  --color-link: var(--hex-blue-600);
+  --color-user: var(--hex-blue-100);
+  --color-assistant: var(--hex-gray-100);
+  --color-thinking: var(--hex-yellow-100);
+  --color-tool: var(--hex-green-100);
+  --color-success: var(--hex-green-500);
+  --color-error: var(--hex-red-500);
+
+  /* Spacing scale */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 2rem;
+
+  /* Other tokens */
+  --radius: 8px;
+  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+}

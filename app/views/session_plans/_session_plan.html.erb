@@ -1,0 +1,15 @@
+<article class="plan-card">
+  <%= link_to session_plan, data: { turbo_frame: "_top" } do %>
+    <h3 class="plan-card__title"><%= session_plan.display_title %></h3>
+
+    <div class="plan-card__meta">
+      <% if session_plan.file_created_at.present? %>
+        <time><%= session_plan.file_created_at.strftime("%b %d, %Y") %></time>
+      <% end %>
+      <% if session_plan.project_session.present? %>
+        &middot;
+        <span>Session: <%= session_plan.project_session.display_name.truncate(30) %></span>
+      <% end %>
+    </div>
+  <% end %>
+</article>

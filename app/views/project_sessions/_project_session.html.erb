@@ -1,0 +1,25 @@
+<article class="session-card">
+  <%= link_to project_session, data: { turbo_frame: "_top" } do %>
+    <h3 class="session-card__title">
+      <%= project_session.display_name %>
+      <% if project_session.session_plan.present? %>
+        <span class="badge badge--plan" title="<%= project_session.session_plan.display_title %>">Plan</span>
+      <% end %>
+    </h3>
+
+    <div class="session-card__meta">
+      <% if project_session.git_branch.present? %>
+        <span class="session-card__branch"><%= project_session.git_branch %></span>
+      <% end %>
+      <time class="session-card__time"><%= time_ago_in_words(project_session.started_at) %> ago</time>
+    </div>
+
+    <div class="session-card__stats">
+      <span><%= project_session.messages.count %> msgs</span>
+      <span><%= number_with_delimiter(project_session.total_tokens) %> tokens</span>
+      <% if project_session.child_sessions.any? %>
+        <span><%= project_session.child_sessions.count %> agents</span>
+      <% end %>
+    </div>
+  <% end %>
+</article>

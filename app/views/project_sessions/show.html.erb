@@ -1,0 +1,55 @@
+<% content_for(:title) { "#{@project_session.display_name} - Claude Explorer" } %>
+
+<header class="page-header">
+  <div class="page-header__breadcrumb">
+    <%= link_to "Projects", projects_path %> /
+    <%= link_to @project_session.project.name, @project_session.project %> /
+  </div>
+  <h1>
+    <%= @project_session.display_name %>
+    <% if @project_session.session_plan.present? %>
+      <span class="badge badge--plan">Plan</span>
+    <% end %>
+  </h1>
+
+  <div class="session-meta">
+    <% if @project_session.git_branch.present? %>
+      <span>Branch: <strong><%= @project_session.git_branch %></strong></span>
+    <% end %>
+    <span>Started: <strong><%= @project_session.started_at&.strftime("%b %d, %Y %H:%M") %></strong></span>
+    <span>Messages: <strong><%= @project_session.messages.count %></strong></span>
+    <span>Tokens: <strong><%= number_with_delimiter(@project_session.total_tokens) %></strong></span>
+  </div>
+
+  <div class="session-actions">
+    <%= link_to "Tree View", project_session_tree_path(@project_session), class: "btn btn--small" %>
+  </div>
+</header>
+
+<% if @project_session.session_plan.present? %>
+  <%= render "session_plans/preview", session_plan: @project_session.session_plan %>
+<% end %>
+
+<% if @project_session.child_sessions.any? %>
+  <aside class="sidechains">
+    <h3>Agent Sidechains (<%= @project_session.child_sessions.count %>)</h3>
+    <ul class="sidechains__list">
+      <% @project_session.child_sessions.each do |sidechain| %>
+        <li>
+          <%= link_to sidechain do %>
+            <strong><%= sidechain.agent_id %></strong>
+            <span><%= sidechain.messages.count %> msgs</span>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+  </aside>
+<% end %>
+
+<section class="conversation">
+  <%= with_manual_pagination :messages, @page do %>
+    <% @page.records.each do |message| %>
+      <%= render "messages/message", message: message %>
+    <% end %>
+  <% end %>
+</section>

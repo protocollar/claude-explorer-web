@@ -1,0 +1,22 @@
+<% content_for(:title) { "#{@project_group.display_name} - Claude Explorer" } %>
+
+<header class="page-header">
+  <div class="page-header__breadcrumb">
+    <%= link_to "Groups", project_groups_path %> /
+  </div>
+  <h1><%= @project_group.display_name %></h1>
+
+  <div class="page-header__stats">
+    <span><%= @project_group.projects.count %> projects</span>
+  </div>
+</header>
+
+<% if @page.records.empty? %>
+  <p class="empty-state">No projects in this group.</p>
+<% else %>
+  <%= with_manual_pagination :projects, @page, class: "projects-grid" do %>
+    <% @page.records.each do |project| %>
+      <%= render "projects/project", project: project %>
+    <% end %>
+  <% end %>
+<% end %>

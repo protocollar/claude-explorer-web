@@ -1,0 +1,5 @@
+claude_explorer_group:
+  sourceable: claude_explorer_repo (Repository)
+
+documents_group:
+  sourceable: documents_folder (Folder)

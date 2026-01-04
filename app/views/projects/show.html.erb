@@ -1,0 +1,29 @@
+<% content_for(:title) { "#{@project.name} - Claude Explorer" } %>
+
+<header class="page-header">
+  <div class="page-header__breadcrumb">
+    <%= link_to "Projects", projects_path %> /
+  </div>
+  <h1><%= @project.name %></h1>
+  <p class="page-header__path"><%= @project.path %></p>
+
+  <div class="page-header__stats">
+    <span><%= @project.project_sessions.main_sessions.count %> sessions</span>
+    <span><%= @project.project_sessions.sidechains.count %> agent sidechains</span>
+    <span><%= number_with_delimiter(@project.messages.count) %> messages</span>
+  </div>
+</header>
+
+<section class="sessions-list">
+  <h2>Sessions</h2>
+
+  <% if @page.records.empty? %>
+    <p class="empty-state">No sessions found for this project.</p>
+  <% else %>
+    <%= with_manual_pagination :sessions, @page do %>
+      <% @page.records.each do |project_session| %>
+        <%= render "project_sessions/project_session", project_session: project_session %>
+      <% end %>
+    <% end %>
+  <% end %>
+</section>

@@ -1,0 +1,41 @@
+@layer utilities {
+  .notice {
+    background: var(--color-tool);
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+    border-radius: var(--radius);
+  }
+
+  .empty-state {
+    color: var(--color-muted);
+    text-align: center;
+    padding: var(--spacing-lg);
+  }
+
+  .badge {
+    display: inline-block;
+    padding: 0 var(--spacing-xs);
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: normal;
+    vertical-align: middle;
+    margin-left: var(--spacing-xs);
+  }
+
+  .badge--plan {
+    background: #dbeafe;
+    color: #1d4ed8;
+  }
+
+  .bar {
+    height: 20px;
+    background: var(--color-link);
+    border-radius: 2px;
+    min-width: 2px;
+  }
+
+  /* Turbo frames should not affect layout */
+  turbo-frame {
+    display: contents;
+  }
+}

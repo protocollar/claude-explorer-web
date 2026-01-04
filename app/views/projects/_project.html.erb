@@ -1,0 +1,14 @@
+<article class="project-card">
+  <%= link_to project, data: { turbo_frame: "_top" } do %>
+    <h2 class="project-card__name"><%= project.name %></h2>
+    <p class="project-card__path"><%= truncate(project.path, length: 50) %></p>
+
+    <div class="project-card__stats">
+      <span><%= project.project_sessions.main_sessions.count %> sessions</span>
+      <span><%= project.project_sessions.sidechains.count %> agents</span>
+      <% if project.last_cost %>
+        <span>$<%= number_with_precision(project.last_cost, precision: 2) %> last</span>
+      <% end %>
+    </div>
+  <% end %>
+</article>

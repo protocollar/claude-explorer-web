@@ -1,0 +1,195 @@
+# Messages for testing
+
+# User messages
+user_question:
+  project_session: main_session
+  uuid: msg-user-001
+  parent_uuid: ~
+  parent_message: ~
+  message_type: user
+  role: user
+  model: ~
+  content: <%= [{ "type" => "text", "text" => "How do I create a model in Rails?" }].to_json %>
+  timestamp: <%= 2.hours.ago %>
+  input_tokens: 50
+  output_tokens: 0
+  cache_read_tokens: 0
+  cache_creation_tokens: 0
+  is_sidechain: false
+  has_thinking: false
+  thinking_metadata: {}
+  todos: []
+
+user_followup:
+  project_session: main_session
+  uuid: msg-user-002
+  parent_uuid: msg-assistant-001
+  parent_message: assistant_response
+  message_type: user
+  role: user
+  model: ~
+  content: <%= [{ "type" => "text", "text" => "Can you add validations?" }].to_json %>
+  timestamp: <%= 1.5.hours.ago %>
+  input_tokens: 30
+  output_tokens: 0
+  cache_read_tokens: 0
+  cache_creation_tokens: 0
+  is_sidechain: false
+  has_thinking: false
+  thinking_metadata: {}
+  todos: []
+
+user_tool_result:
+  project_session: main_session
+  uuid: msg-user-003
+  parent_uuid: msg-assistant-002
+  parent_message: assistant_with_tool
+  message_type: user
+  role: user
+  model: ~
+  content: <%= [{ "type" => "tool_result", "tool_use_id" => "tool-read-001", "content" => "class User < ApplicationRecord\nend", "is_error" => false }].to_json %>
+  timestamp: <%= 1.4.hours.ago %>
+  input_tokens: 40
+  output_tokens: 0
+  cache_read_tokens: 0
+  cache_creation_tokens: 0
+  is_sidechain: false
+  has_thinking: false
+  thinking_metadata: {}
+  todos: []
+
+# Assistant messages
+assistant_response:
+  project_session: main_session
+  uuid: msg-assistant-001
+  parent_uuid: msg-user-001
+  parent_message: user_question
+  message_type: assistant
+  role: assistant
+  model: claude-3-opus-20240229
+  content: <%= [{ "type" => "text", "text" => "To create a model in Rails, use the generator command: rails generate model ModelName field:type" }].to_json %>
+  timestamp: <%= 1.9.hours.ago %>
+  input_tokens: 100
+  output_tokens: 500
+  cache_read_tokens: 50
+  cache_creation_tokens: 10
+  is_sidechain: false
+  has_thinking: false
+  thinking_metadata: {}
+  todos: []
+
+assistant_with_tool:
+  project_session: main_session
+  uuid: msg-assistant-002
+  parent_uuid: msg-user-002
+  parent_message: user_followup
+  message_type: assistant
+  role: assistant
+  model: claude-3-opus-20240229
+  content: <%= [{ "type" => "text", "text" => "Let me read the model file first." }, { "type" => "tool_use", "id" => "tool-read-001", "name" => "Read", "input" => { "file_path" => "/app/models/user.rb" } }].to_json %>
+  timestamp: <%= 1.45.hours.ago %>
+  input_tokens: 150
+  output_tokens: 200
+  cache_read_tokens: 0
+  cache_creation_tokens: 0
+  is_sidechain: false
+  has_thinking: false
+  thinking_metadata: {}
+  todos: []
+
+assistant_with_thinking:
+  project_session: main_session
+  uuid: msg-assistant-003
+  parent_uuid: msg-user-003
+  parent_message: user_tool_result
+  message_type: assistant
+  role: assistant
+  model: claude-3-opus-20240229
+  content: <%= [{ "type" => "thinking", "thinking" => "I need to analyze this code and suggest validations..." }, { "type" => "text", "text" => "Based on the model, I suggest adding presence validations." }].to_json %>
+  timestamp: <%= 1.35.hours.ago %>
+  input_tokens: 200
+  output_tokens: 300
+  cache_read_tokens: 0
+  cache_creation_tokens: 0
+  is_sidechain: false
+  has_thinking: true
+  thinking_metadata: <%= { "thinking_budget" => 1000 }.to_json %>
+  todos: []
+
+# Branching messages (for testing has_branches?)
+branch_parent:
+  project_session: recent_session
+  uuid: msg-branch-parent
+  parent_uuid: ~
+  parent_message: ~
+  message_type: user
+  role: user
+  model: ~
+  content: <%= [{ "type" => "text", "text" => "Original question with multiple branches" }].to_json %>
+  timestamp: <%= 25.minutes.ago %>
+  input_tokens: 20
+  output_tokens: 0
+  cache_read_tokens: 0
+  cache_creation_tokens: 0
+  is_sidechain: false
+  has_thinking: false
+  thinking_metadata: {}
+  todos: []
+
+branch_child_one:
+  project_session: recent_session
+  uuid: msg-branch-child-1
+  parent_uuid: msg-branch-parent
+  parent_message: branch_parent
+  message_type: assistant
+  role: assistant
+  model: claude-3-opus-20240229
+  content: <%= [{ "type" => "text", "text" => "First response branch" }].to_json %>
+  timestamp: <%= 24.minutes.ago %>
+  input_tokens: 50
+  output_tokens: 100
+  cache_read_tokens: 0
+  cache_creation_tokens: 0
+  is_sidechain: false
+  has_thinking: false
+  thinking_metadata: {}
+  todos: []
+
+branch_child_two:
+  project_session: recent_session
+  uuid: msg-branch-child-2
+  parent_uuid: msg-branch-parent
+  parent_message: branch_parent
+  message_type: assistant
+  role: assistant
+  model: claude-3-opus-20240229
+  content: <%= [{ "type" => "text", "text" => "Second response branch" }].to_json %>
+  timestamp: <%= 23.minutes.ago %>
+  input_tokens: 50
+  output_tokens: 100
+  cache_read_tokens: 0
+  cache_creation_tokens: 0
+  is_sidechain: false
+  has_thinking: false
+  thinking_metadata: {}
+  todos: []
+
+# Agent/sidechain message
+agent_message:
+  project_session: agent_sidechain
+  uuid: msg-agent-001
+  parent_uuid: ~
+  parent_message: ~
+  message_type: user
+  role: user
+  model: ~
+  content: <%= [{ "type" => "text", "text" => "Explore the codebase" }].to_json %>
+  timestamp: <%= 1.5.hours.ago %>
+  input_tokens: 10
+  output_tokens: 0
+  cache_read_tokens: 0
+  cache_creation_tokens: 0
+  is_sidechain: true
+  has_thinking: false
+  thinking_metadata: {}
+  todos: []

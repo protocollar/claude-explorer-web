@@ -1,0 +1,23 @@
+# Projects for testing
+
+claude_explorer:
+  path: /Users/test/Code/claude-explorer
+  encoded_path: -Users-test-Code-claude-explorer
+  name: claude-explorer
+  last_cost: 12.50
+  last_session_id: abc123
+  last_model_usage: <%= { "claude-3-opus" => 100 }.to_json %>
+  project_group: claude_explorer_group
+
+writebook:
+  path: /Users/test/Code/writebook
+  encoded_path: -Users-test-Code-writebook
+  name: writebook
+  last_cost: 5.00
+  last_session_id: def456
+  last_model_usage: {}
+
+empty_project:
+  path: /Users/test/Code/empty
+  encoded_path: -Users-test-Code-empty
+  name: ~

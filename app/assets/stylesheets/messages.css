@@ -1,0 +1,114 @@
+@layer components {
+  .conversation {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+  }
+
+  .messages {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+  }
+
+  .message {
+    padding: var(--spacing-md);
+    border-radius: var(--radius);
+  }
+
+  .message--user {
+    background: var(--color-user);
+  }
+
+  .message--assistant {
+    background: var(--color-assistant);
+  }
+
+  .message__header {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+    font-size: 0.875rem;
+    color: var(--color-muted);
+    margin-bottom: var(--spacing-sm);
+    align-items: center;
+  }
+
+  .message__role {
+    font-weight: bold;
+    text-transform: capitalize;
+    color: var(--color-text);
+  }
+
+  .message__model {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+  }
+
+  .message__branches {
+    background: var(--color-thinking);
+    padding: 0 var(--spacing-xs);
+    border-radius: 4px;
+  }
+
+  .message__thinking-badge {
+    background: var(--color-thinking);
+    padding: 0 var(--spacing-xs);
+    border-radius: 4px;
+    font-size: 0.75rem;
+  }
+
+  .message__content {
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .message__tools {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+  }
+
+  /* Content blocks */
+  .content-block {
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .content-block--text {
+    & p:first-child {
+      margin-top: 0;
+    }
+
+    & p:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  .content-block--thinking {
+    background: var(--color-thinking);
+    padding: var(--spacing-sm);
+    border-radius: var(--radius);
+
+    & summary {
+      cursor: pointer;
+      font-size: 0.875rem;
+      color: var(--color-muted);
+    }
+  }
+
+  .content-block__thinking-content {
+    margin-top: var(--spacing-sm);
+    font-size: 0.875rem;
+  }
+
+  .content-block--tool-result {
+    background: var(--color-tool);
+    padding: var(--spacing-sm);
+    border-radius: var(--radius);
+    font-size: 0.875rem;
+
+    & strong {
+      display: block;
+      margin-bottom: var(--spacing-xs);
+    }
+  }
+}

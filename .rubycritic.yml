@@ -1,0 +1,19 @@
+paths:
+  - app
+  - lib
+
+# Exclude generated files and vendored code
+excludes:
+  - vendor
+  - tmp
+
+# Minimum score threshold (0-100, higher is better)
+minimum_score: 90
+
+# Output formats: html, json, console, lint
+formats:
+  - html
+  - console
+
+# Don't open browser automatically
+no_browser: true

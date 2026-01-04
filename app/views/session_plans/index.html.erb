@@ -1,0 +1,16 @@
+<% content_for(:title) { "Plans - Claude Explorer" } %>
+
+<header class="page-header">
+  <h1>Plans</h1>
+  <p class="page-header__subtitle"><%= @page.recordset.records_count %> plans from plan mode sessions</p>
+</header>
+
+<% if @page.records.any? %>
+  <%= with_manual_pagination :plans, @page, class: "plans-grid" do %>
+    <% @page.records.each do |session_plan| %>
+      <%= render "session_plan", session_plan: session_plan %>
+    <% end %>
+  <% end %>
+<% else %>
+  <p class="empty-state">No plans found. Plans are created when using Claude Code's plan mode.</p>
+<% end %>

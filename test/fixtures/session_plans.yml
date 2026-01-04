@@ -1,0 +1,51 @@
+# Session plans for testing
+
+mvp_plan:
+  slug: precious-sniffing-fiddle
+  title: Claude Explorer MVP Plan
+  content: |
+    # Claude Explorer MVP Plan
+
+    Build a Rails app to visualize Claude Code conversation history.
+
+    ## Phase 1: Models
+    - Create Project model
+    - Create Session model
+
+    ## Phase 2: Import
+    - Build JSONL parser
+    - Import conversations
+  project_session: main_session
+  file_created_at: <%= 1.day.ago %>
+
+test_coverage_plan:
+  slug: deep-finding-breeze
+  title: Test Coverage Plan
+  content: |
+    # Test Coverage Plan
+
+    Add comprehensive test coverage for the MVP.
+
+    ## Goals
+    - Model tests
+    - Controller tests
+    - System tests
+  project_session: writebook_session
+  file_created_at: <%= 12.hours.ago %>
+
+unlinked_plan:
+  slug: serene-dreaming-anchor
+  title: Unlinked Plan
+  content: |
+    # Unlinked Plan
+
+    This plan has no associated session.
+  project_session: ~
+  file_created_at: <%= 2.days.ago %>
+
+minimal_plan:
+  slug: simple-walking-cloud
+  title: ~
+  content: Just some content without a title heading.
+  project_session: recent_session
+  file_created_at: <%= 6.hours.ago %>

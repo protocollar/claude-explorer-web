@@ -1,0 +1,11 @@
+claude_explorer_repo:
+  git_common_dir: /Users/thomascarr/Code/Personal/claude-explorer-web/.git
+  remote_url: git@github.com:thomascarr/claude-explorer-web.git
+  normalized_url: github.com/thomascarr/claude-explorer-web
+  provider: github
+
+local_only_repo:
+  git_common_dir: /Users/thomascarr/Code/Personal/local-project/.git
+  remote_url:
+  normalized_url:
+  provider:

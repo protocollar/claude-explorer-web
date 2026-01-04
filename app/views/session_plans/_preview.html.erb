@@ -1,0 +1,16 @@
+<section class="plan-preview">
+  <div class="plan-preview__header">
+    <h3 class="plan-preview__title"><%= session_plan.display_title %></h3>
+    <span class="plan-preview__meta">
+      <%= session_plan.file_created_at&.strftime("%b %d, %Y") %>
+    </span>
+  </div>
+
+  <div class="plan-preview__content">
+    <%= markdown(session_plan.truncated_content(800)) %>
+  </div>
+
+  <div class="plan-preview__actions">
+    <%= link_to "View Full Plan", session_plan_path(session_plan), class: "btn btn--small" %>
+  </div>
+</section>

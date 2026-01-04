@@ -1,0 +1,51 @@
+@layer components {
+  .main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: var(--spacing-lg);
+  }
+
+  .page-header {
+    margin-bottom: var(--spacing-lg);
+
+    & h1 {
+      margin: 0 0 var(--spacing-sm);
+    }
+  }
+
+  .page-header__breadcrumb {
+    font-size: 0.875rem;
+    color: var(--color-muted);
+    margin-bottom: var(--spacing-xs);
+  }
+
+  .page-header__subtitle,
+  .page-header__path {
+    color: var(--color-muted);
+    margin: 0;
+  }
+
+  .page-header__stats {
+    display: flex;
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-sm);
+    font-size: 0.875rem;
+    color: var(--color-muted);
+  }
+
+  .toggle-link {
+    display: inline-block;
+    margin-top: var(--spacing-sm);
+    font-size: 0.875rem;
+    color: var(--color-muted);
+    text-decoration: underline;
+
+    &:hover {
+      color: var(--color-link);
+    }
+  }
+
+  .toggle-link--active {
+    color: var(--color-link);
+  }
+}

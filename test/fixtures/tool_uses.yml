@@ -1,0 +1,91 @@
+# Tool uses for testing
+
+# Read tool
+read_model:
+  message: assistant_with_tool
+  tool_use_id: tool-read-001
+  tool_name: Read
+  input: <%= { "file_path" => "/app/models/user.rb" }.to_json %>
+  result: "class User < ApplicationRecord\nend"
+  success: true
+
+# Write tool
+write_model:
+  message: assistant_response
+  tool_use_id: tool-write-001
+  tool_name: Write
+  input: <%= { "file_path" => "/app/models/post.rb", "content" => "class Post < ApplicationRecord\nend" }.to_json %>
+  result: ~
+  success: true
+
+# Edit tool
+edit_controller:
+  message: assistant_response
+  tool_use_id: tool-edit-001
+  tool_name: Edit
+  input: <%= { "file_path" => "/app/controllers/users_controller.rb", "old_string" => "def index", "new_string" => "def index\n    @users = User.all" }.to_json %>
+  result: ~
+  success: true
+
+# Bash tool (short command)
+bash_short:
+  message: assistant_response
+  tool_use_id: tool-bash-001
+  tool_name: Bash
+  input: <%= { "command" => "bin/rails test" }.to_json %>
+  result: "1 test, 0 failures"
+  success: true
+
+# Bash tool (long command - for truncation test)
+bash_long:
+  message: assistant_with_thinking
+  tool_use_id: tool-bash-002
+  tool_name: Bash
+  input: <%= { "command" => "this is a very long command that exceeds one hundred characters and should be truncated in the display_input method when testing" }.to_json %>
+  result: ~
+  success: true
+
+# Grep tool (with path)
+grep_with_path:
+  message: assistant_with_tool
+  tool_use_id: tool-grep-001
+  tool_name: Grep
+  input: <%= { "pattern" => "validates", "path" => "/app/models" }.to_json %>
+  result: "app/models/user.rb:2:  validates :email"
+  success: true
+
+# Grep tool (without path)
+grep_no_path:
+  message: assistant_with_thinking
+  tool_use_id: tool-grep-002
+  tool_name: Grep
+  input: <%= { "pattern" => "def create" }.to_json %>
+  result: ~
+  success: true
+
+# Glob tool
+glob_pattern:
+  message: assistant_response
+  tool_use_id: tool-glob-001
+  tool_name: Glob
+  input: <%= { "pattern" => "**/*.rb" }.to_json %>
+  result: ~
+  success: true
+
+# Failed tool use
+bash_failed:
+  message: assistant_with_thinking
+  tool_use_id: tool-bash-fail
+  tool_name: Bash
+  input: <%= { "command" => "bin/rails db:migrate" }.to_json %>
+  result: "Error: migration failed - table already exists"
+  success: false
+
+# Unknown tool (for default display_input)
+unknown_tool:
+  message: assistant_response
+  tool_use_id: tool-unknown-001
+  tool_name: CustomTool
+  input: <%= { "complex" => { "nested" => "data" }, "more" => "values" }.to_json %>
+  result: ~
+  success: true

@@ -1,0 +1,22 @@
+<% content_for(:title) { "#{@session_plan.display_title} - Claude Explorer" } %>
+
+<header class="page-header">
+  <div class="page-header__breadcrumb">
+    <%= link_to "Plans", session_plans_path %> /
+  </div>
+  <h1><%= @session_plan.display_title %></h1>
+
+  <div class="session-meta">
+    <% if @session_plan.file_created_at.present? %>
+      <span>Created: <strong><%= @session_plan.file_created_at.strftime("%b %d, %Y %H:%M") %></strong></span>
+    <% end %>
+    <% if @session_plan.project_session.present? %>
+      <span>Session: <strong><%= link_to @session_plan.project_session.display_name, @session_plan.project_session %></strong></span>
+    <% end %>
+    <span>Slug: <strong><%= @session_plan.slug %></strong></span>
+  </div>
+</header>
+
+<article class="plan-content">
+  <%= markdown(@session_plan.content) %>
+</article>

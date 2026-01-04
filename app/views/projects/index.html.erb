@@ -1,0 +1,18 @@
+<% content_for(:title) { "Projects - Claude Explorer" } %>
+
+<header class="page-header">
+  <h1>Projects</h1>
+  <p class="page-header__subtitle"><%= @page.recordset.records_count %> projects tracked</p>
+
+  <% if @show_empty %>
+    <%= link_to "Hide empty projects", projects_path, class: "toggle-link toggle-link--active" %>
+  <% else %>
+    <%= link_to "Show empty projects", projects_path(show_empty: true), class: "toggle-link" %>
+  <% end %>
+</header>
+
+<%= with_manual_pagination :projects, @page, class: "projects-grid" do %>
+  <% @page.records.each do |project| %>
+    <%= render "project", project: project %>
+  <% end %>
+<% end %>

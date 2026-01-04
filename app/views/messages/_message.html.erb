@@ -1,0 +1,33 @@
+<article class="message message--<%= message.role %>" id="<%= dom_id(message) %>">
+  <header class="message__header">
+    <span class="message__role"><%= message.role&.capitalize %></span>
+    <% if message.model.present? %>
+      <span class="message__model"><%= message.model.split("-").first(2).join(" ").titleize %></span>
+    <% end %>
+    <time class="message__time"><%= message.timestamp.strftime("%H:%M:%S") %></time>
+
+    <% if message.has_branches? %>
+      <span class="message__branches" title="<%= message.branch_count %> branches">
+        <%= message.branch_count %> branches
+      </span>
+    <% end %>
+
+    <% if message.has_thinking %>
+      <span class="message__thinking-badge">thinking</span>
+    <% end %>
+  </header>
+
+  <div class="message__content">
+    <% message.content.each do |block| %>
+      <%= render "messages/content_block", block: block %>
+    <% end %>
+  </div>
+
+  <% if message.tool_uses.any? %>
+    <footer class="message__tools">
+      <% message.tool_uses.each do |tool_use| %>
+        <%= render "tool_uses/tool_use", tool_use: tool_use %>
+      <% end %>
+    </footer>
+  <% end %>
+</article>

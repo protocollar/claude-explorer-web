@@ -1,0 +1,42 @@
+---
+glob: "app/views/**/*.{html,html.erb,erb}"
+
+linters:
+  AllowedScriptType:
+    enabled: true
+    allowed_types:
+      - "module"
+      - "text/javascript"
+
+  ClosingErbTagIndent:
+    enabled: true
+
+  ExtraNewline:
+    enabled: true
+
+  FinalNewline:
+    enabled: true
+
+  NoJavascriptTagHelper:
+    enabled: true
+
+  ParserErrors:
+    enabled: true
+
+  RightTrim:
+    enabled: true
+
+  SelfClosingTag:
+    enabled: true
+
+  SpaceAroundErbTag:
+    enabled: true
+
+  SpaceIndentation:
+    enabled: true
+
+  SpaceInHtmlTag:
+    enabled: true
+
+  TrailingWhitespace:
+    enabled: true

@@ -1,0 +1,96 @@
+@layer components {
+  .sessions-list h2 {
+    margin-bottom: var(--spacing-md);
+  }
+
+  .session-card {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-sm);
+    transition: border-color 0.2s;
+
+    &:hover {
+      border-color: var(--color-link);
+    }
+
+    & a {
+      color: inherit;
+      display: block;
+
+      &:hover {
+        text-decoration: none;
+      }
+    }
+  }
+
+  .session-card__title {
+    margin: 0 0 var(--spacing-xs);
+    font-size: 1rem;
+  }
+
+  .session-card__meta {
+    display: flex;
+    gap: var(--spacing-md);
+    font-size: 0.875rem;
+    color: var(--color-muted);
+    margin-bottom: var(--spacing-xs);
+  }
+
+  .session-card__branch {
+    font-family: var(--font-mono);
+    background: var(--color-assistant);
+    padding: 0 var(--spacing-xs);
+    border-radius: 4px;
+  }
+
+  .session-card__stats {
+    display: flex;
+    gap: var(--spacing-md);
+    font-size: 0.875rem;
+    color: var(--color-muted);
+  }
+
+  .session-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-md);
+    font-size: 0.875rem;
+    color: var(--color-muted);
+    margin-bottom: var(--spacing-md);
+  }
+
+  .session-actions {
+    margin-top: var(--spacing-md);
+  }
+
+  .sidechains {
+    background: var(--color-assistant);
+    padding: var(--spacing-md);
+    border-radius: var(--radius);
+    margin-bottom: var(--spacing-lg);
+
+    & h3 {
+      margin: 0 0 var(--spacing-sm);
+      font-size: 1rem;
+    }
+  }
+
+  .sidechains__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+
+    & li a {
+      display: inline-flex;
+      gap: var(--spacing-xs);
+      padding: var(--spacing-xs) var(--spacing-sm);
+      background: white;
+      border-radius: 4px;
+      font-size: 0.875rem;
+    }
+  }
+}

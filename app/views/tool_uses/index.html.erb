@@ -1,0 +1,59 @@
+<% content_for(:title) { "Tool Analytics - Claude Explorer" } %>
+
+<header class="page-header">
+  <h1>Tool Usage Analytics</h1>
+  <p class="page-header__subtitle"><%= number_with_delimiter(ToolUse.count) %> total tool calls</p>
+</header>
+
+<section class="tool-stats">
+  <h2>Usage by Tool</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Tool</th>
+        <th>Uses</th>
+        <th>Bar</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% max_count = @tool_stats.first&.last || 1 %>
+      <% @tool_stats.each do |tool_name, count| %>
+        <tr>
+          <td><%= tool_name %></td>
+          <td><%= number_with_delimiter(count) %></td>
+          <td>
+            <div class="bar" style="width: <%= (count.to_f / max_count * 100).round %>%"></div>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</section>
+
+<section class="recent-tools">
+  <h2>Recent Tool Calls</h2>
+  <%= with_manual_pagination :tool_uses, @page do %>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Tool</th>
+          <th>Input</th>
+          <th>Session</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @page.records.each do |tool_use| %>
+          <tr>
+            <td><%= tool_use.tool_name %></td>
+            <td class="truncate"><%= tool_use.display_input %></td>
+            <td>
+              <% if tool_use.project_session %>
+                <%= link_to tool_use.project_session.display_name.truncate(30), tool_use.project_session %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% end %>
+</section>

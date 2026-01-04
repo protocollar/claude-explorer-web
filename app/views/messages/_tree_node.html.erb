@@ -1,0 +1,19 @@
+<% messages.each do |message| %>
+  <div class="tree-node tree-node--<%= message.role %>">
+    <div class="tree-node__content">
+      <span class="tree-node__role"><%= message.role&.first&.upcase %></span>
+      <span class="tree-node__text"><%= message.truncated_content(length: 100) %></span>
+      <% if message.tool_uses.any? %>
+        <span class="tree-node__tools">
+          <%= message.tool_uses.map(&:tool_name).uniq.join(", ") %>
+        </span>
+      <% end %>
+    </div>
+
+    <% if message.child_messages.any? %>
+      <div class="tree-node__children" data-tree-target="children">
+        <%= render "messages/tree_node", messages: message.child_messages.ordered %>
+      </div>
+    <% end %>
+  </div>
+<% end %>
